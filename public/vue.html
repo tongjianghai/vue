@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script src="../node_modules/lodash/lodash.js"></script>
+</head>
+
+<body>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .hd {
+            color: green;
+        }
+
+        .hd1 {
+            color: red;
+        }
+
+        .hd2 {
+            color: green;
+        }
+
+        .color {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .font {
+            font-size: 200px;
+        }
+    </style>
+    <div id="hdcms">
+        <h1 :class="[ success,font ]">houdun</h1>
+        <!-- <h1 :class="['color','font']">houdun</h1> -->
+        <!-- <h1 class="green" :class="hd">houdun</h1> -->
+        <!-- <h1 class="green" :class="{ color:false, font:true }">houdun</h1> -->
+        <!-- <input v-model="word" type="text" /> -->
+        <!-- <h1>{{ result }}</h1> -->
+        <!-- <input v-model="n1" type="text" />+ -->
+        <!-- <input v-model="n2" type="text" />= -->
+        <!-- <input v-model="sum" type="text" /> -->
+        <!-- {{ sum }} -->
+        <!-- {{ n+3 }} -->
+        <!-- <h1 :class="'hd'+n">hello houdun</h1> -->
+        <!-- <input v-model="n" type="text" /> -->
+        <!-- <input v-model="n" type="radio" value="1" />red -->
+        <!-- <input v-model="n" type="radio" value="2" />green -->
+        <!-- <input v-model="hd" type="text" /> -->
+        <!-- <h1 v-once>{{ hd }}</h1> -->
+        <!-- <h1>{{ hd }}</h1> -->
+        <!-- {{ hd }} -->
+        <!-- <h1 v-text="hd"></h1> -->
+        <!-- <h1 v-html="hd"></h1> -->
+        <!-- <h1 v-bind:class="'hd'" v-bind:id="'houdunwang'">hdphp.com</h1> -->
+    </div>
+    <!-- <div id="app-4">
+        <p>{{ a }}</p>
+        <button v-on:click="a=5">a=5</button>
+    </div>
+    <div id="app">
+        {{ message }}
+        <button @click="reverseMessage">reverseMessage</button>
+        <input v-model="message" type="text" />
+        <ol>
+            <todo-item v-for="item in items" v-bind:todo="item" v-bind:key="item.id">
+            </todo-item>
+        </ol>
+    </div>
+    <div id="app-2">
+        <span v-if="seen" v-bind:title="message">hover</span>
+    </div>
+    <div id="app-3">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+
+        </ol>
+    </div> -->
+    <script src="index.js"></script>
+</body>
+
+</html>
