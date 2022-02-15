@@ -48,6 +48,11 @@
         <li v-for="(item,key,index) in user">
             {{index}} - {{key}} - {{item}}
         </li>
+        <table border="1" width="100%">
+            <tr v-for="item in 20">
+                <td>{{item}}</td>
+            </tr>
+        </table>
         <!-- <table border="1">
             <tr>
                 <th>序号</th>
@@ -93,9 +98,9 @@
         <!-- <button @click="changeStatus(v,true)" v-if="!v.status">恢复</button> -->
         <!-- </li> -->
         <!-- <h1 :class="[ success,font ]">houdun</h1> -->
-    </style>
-    <div id="hdcms">
-        <h1 :class="[ success,font ]">houdun</h1>
+        <!-- </style> -->
+        <!-- <div id="hdcms"> -->
+        <!-- <h1 :class="[ success,font ]">houdun</h1> -->
         <!-- <h1 :class="['color','font']">houdun</h1> -->
         <!-- <h1 class="green" :class="hd">houdun</h1> -->
         <!-- <h1 class="green" :class="{ color:false, font:true }">houdun</h1> -->

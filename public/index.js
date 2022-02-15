@@ -40,13 +40,13 @@ var app = new Vue({
         // },
         // success: 'color',
         // font: 'font'
-    data: {
-        hd: {
-            color: true,
-            font: true
-        },
-        success: 'color',
-        font: 'font'
+        // data: {
+        //     hd: {
+        //         color: true,
+        //         font: true
+        //     },
+        //     success: 'color',
+        //     font: 'font'
         // hd: 'red',
         // hd: 'houdunren'
         // hd: '<h1 style="color:red">houdunren.com</h1>'
