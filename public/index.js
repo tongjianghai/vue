@@ -1,13 +1,45 @@
 
 var app = new Vue({
     el: "#hdcms",
+    methods: {
+        changeStatus: function (item, status) {
+            item.status = status;
+        }
+    },
     data: {
-        hd: {
-            color: true,
-            font: true
-        },
-        success: 'color',
-        font: 'font'
+        user: {
+            name: 'name',
+            age: 20,
+            gender: 'male'
+        }
+        // news: [
+        //     { id: 1, title: "houdun" },
+        //     { id: 2, title: "houdunwang" }
+        // ],
+        // lang: "php"
+        // status: true
+        // regType: 'mail'
+        // copyright: false,
+        // age: 0
+        // red: 'green',
+        // size: 16,
+        // style: {
+        //     color: 'blue'
+        // },
+        // hdcms: {
+        //     color: 'yellow',
+        //     backgroundColor: 'blue'
+        // }
+        // news: [
+        //     { title: 'houdun', status: true },
+        //     { title: 'houdun.com', status: true }
+        // ],
+        // hd: {
+        //     color: true,
+        //     font: true
+        // },
+        // success: 'color',
+        // font: 'font'
         // hd: 'red',
         // hd: 'houdunren'
         // hd: '<h1 style="color:red">houdunren.com</h1>'

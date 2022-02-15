@@ -35,9 +35,64 @@
         .font {
             font-size: 200px;
         }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
     </style>
     <div id="hdcms">
-        <h1 :class="[ success,font ]">houdun</h1>
+        <li v-for="(item,key,index) in user">
+            {{index}} - {{key}} - {{item}}
+        </li>
+        <!-- <table border="1">
+            <tr>
+                <th>序号</th>
+                <th>编号</th>
+                <th>标题</th>
+                <th>语言</th>
+            </tr>
+         <tr v-for="field in news">
+        <tr v-for="(field,key) of news">
+            <td>{{key+1}}</td>
+            <td>{{field.id}}</td>
+            <td>{{field.title}}</td>
+            <td>{{lang}}</td>
+        </tr>
+        </table> -->
+        <!-- <h1 v-if="status">houdun</h1>
+        <h1 v-show="status">houdun</h1>
+        <input v-model="status" type="checkbox" /> -->
+        <!-- <template v-if="regType=='mail'">
+            mail: <input type=" text" name="username" key="mail" />
+        </template>
+        <template v-else>
+            mobile: <input type="text" name="username" key="mobile" />
+        </template>
+        <br />
+        <input v-model="regType" type="radio" value="mail" /> mail
+        <input v-model="regType" type="radio" value="mobile" /> mobile -->
+        <!-- <input v-model="age" type="text" />
+        <span v-if="age<20">child</span>
+        <span v-else-if="age<30">young</span>
+        <span v-else-if="age<50">middle</span>
+        <span v-else>old</span>
+        <input v-model="copyright" type="checkbox" /> 接受协议<br />
+        <span v-if="copyright==false">请先接受协议</span>
+        <button v-else>注册</button> -->
+        <!-- <input v-model="size" type="number" /> -->
+        <!-- <h1 :style="{color:red, fontSize:size+'px'}">houdun</h1> -->
+        <!-- <h2 :style="style">houdun</h2> -->
+        <!-- <h3 :style="[hdcms]">houdun</h3> -->
+        <!-- <li v-for=" v in news"> -->
+        <!-- <span :class="v.status?'success':'error'">{{ v.title }}</span> -->
+        <!-- <button @click=" changeStatus(v,false)" v-if="v.status">删除</button> -->
+        <!-- <button @click="changeStatus(v,true)" v-if="!v.status">恢复</button> -->
+        <!-- </li> -->
+        <!-- <h1 :class="[ success,font ]">houdun</h1> -->
         <!-- <h1 :class="['color','font']">houdun</h1> -->
         <!-- <h1 class="green" :class="hd">houdun</h1> -->
         <!-- <h1 class="green" :class="{ color:false, font:true }">houdun</h1> -->
