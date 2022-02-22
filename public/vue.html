@@ -4,9 +4,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="../node_modules/axios/dist/axios.js"></script>
     <script src="../node_modules/lodash/lodash.js"></script>
+    <script src="velocity.min.js"></script>
 
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="../node_modules/animate.css/animate.css">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
@@ -15,6 +17,53 @@
 
 <body>
     <style>
+        /* .hd-enter,
+        .hd-leave-to {
+            opacity: 0;
+        }
+
+
+        .hd-enter-active,
+        .hd-leave-active {
+            transition: all 2s;
+            color: red;
+        } */
+
+        .hd-enter-active {
+            animation: show-in 1s;
+            transition: all 1s;
+        }
+
+        .hd-leave-active {
+            animation: hide-out 1s;
+            transition: all 1s;
+        }
+
+        .hd-enter,
+        .hd-leave-to {
+            opacity: 0;
+        }
+
+        @keyframes show-in {
+            0% {
+                transform: translate(100px, 0);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes hide-out {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(100px, 0);
+            }
+        }
+
         .red {
             color: red;
         }
@@ -51,21 +100,108 @@
             color: red;
         }
     </style>
+    <script type="text/x-template" id="bsInput">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{{title}}</label>
+            <div class="col-sm-10">
+               <input type="text" :value="value" class="form-control" id="inputEmail3" placeholder="Email">
+            </div>
+        </div>
+    </script>
     <script type="text/x-template" id="hdNews">
-        <div>
+
+        <div class="panel panel-default">
+              <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <slot name="title"></slot>
+                    </h3>
+              </div>
+              <div class="panel-body">
+                  <slot name="body"></slot>
+              </div>
+              <h3>
+                  <slot></slot>
+              </h3>
+        </div>
+        
+        <!-- <div>
             {{showDelButton}}
             <li v-for="(v,k) in lists">
                 {{v.title}}
                 <button @click="delNews(k)" v-if="showDelButton">delete</button>
             </li>
-        </div>
+        </div> -->
+    <!-- <div>
+        <slot name="header">sheader</slot>
+        <slot name="body">sbody</slot>
+    </div> -->
+    <!-- <table border='1' width='90%'>
+        <tr>
+            <th>name</th>
+            <th>num</th>
+            <th>price</th>
+        </tr>
+        <tr v-for="(v,k) in lists">
+            <td>{{v.title}}</td>
+            <td>{{v.price}}</td>
+            <td><input v-model="v.num" type="text" @blur="sum" /></td>
+    <td><input v-model="v.num" type="text" /></td>
+    </tr>
+    </table> -->
+    </script>
+    <script type="text/x-template" id="hdList">
+        <!-- <ul>
+            <slot v-for="v in data" :field="v"></slot> -->
+    <!-- <slot title="hdphp" content="hdcms"></slot> -->
+    <!-- <li v-for="v in data">{{v.title}}</li> -->
+    <!-- </ul> -->
     </script>
     <div id="hdcms">
+        <span v-star="'green'">houdun.com</span>
+        <!-- <input v-model="color" type="text" v-hd.focus="'red'" /> -->
+        <input v-model="color" type="text" v-focus />
+        <h1 v-hide="false">php</h1>
+        <!-- <button @click="type=!type">transit</button>
+        <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+            <h1 v-if="type">houdunjs.com</h1>
+        </transition> -->
+        <!-- <transition name="hd">
+            <h1 v-if="type">houdun.com</h1>
+        </transition> -->
+        <!-- <transition name="hd" enter-active-class="animated slideInDown" leave-active-class="animated zoomOut">
+            <h1 v-if="type">houdun.com</h1>
+        </transition> -->
+        <!-- <div :is="formType"></div>
+        <input type="radio" v-model="formType" value="hdInput" name="" id="">input
+        <input type="radio" v-model="formType" value="hdTextarea" name="" id="">textarea -->
+        <!-- <hd-input></hd-input>
+        <hd-textarea></hd-textarea> -->
+        <!-- <hd-list :data="news">
+            <template scope="v">
+                <li>
+                    <h1>{{v.field.title}}</h1>
+                </li>
+            </template>
+        </hd-list> -->
+
+        <!-- <form action="" class="form-horizontal">
+            <hd-news>
+                <h1 slot="title">header</h1>
+                <p slot="body">
+        <bs-input title="biaoti" value="zhi" slot="body"></bs-input>
+        <bs-input title="biaoti" value="zhi" slot="body"></bs-input>
+        </p>
+        other to slot
+        </hd-news>
+        </form> -->
+
 
         <!-- <hd-slide></hd-slide> -->
         <!-- <hd-slide></hd-slide> -->
-        <hd-news :show-del-button="1" :lists="news"></hd-news>
-
+        <!-- <hd-news :show-del-button="1" :lists="news"></hd-news> -->
+        <!-- <hd-news :lists="goods" @sum="total"></hd-news> -->
+        <!-- <hd-news :lists.sync="goods"></hd-news>
+        total: {{totalPrice}} -->
         <!-- <form>
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>

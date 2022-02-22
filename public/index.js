@@ -5,21 +5,67 @@ Vue.component('hdSlide', {
     template: '<h1>houdun.com</h1>'
 })
 
+// Vue.directive('star', {
+//     bind(el, bind) {
+//         console.log(bind)
+//     }
+// })
+
+Vue.directive('hd', {
+    update(el, bind) {
+        console.log(bind)
+    }
+})
+
+Vue.directive('func', function (el, bind) {
+    console.log(bind)
+})
+
 var lists = {
 
 }
 
+var bsInput = {
+    template: "#bsInput",
+    props: ["title", "value"]
+}
+
+var hdList = {
+    template: "#hdList",
+    props: ['data']
+}
+
+var hdInput = {
+    template: "<div><input/></div>"
+}
+
+var hdTextarea = {
+    template: "<div><textarea></textarea></div>"
+}
+
+
+
 var hdNews = {
     template: "#hdNews",
-    props: {
-        showDelButton: {
-            type: [Boolean, Number],
-            default: true
-        },
-        lists: {
-            type: Array
-        },
-    },
+    // props: {
+    props: ['lists'],
+    // showDelButton: {
+    //     type: [Boolean, Number],
+    //     // default: true,
+    //     required: true
+    // },
+    // showDelButton: {
+    //     validator(v) {
+    //         return v === 1 || v === 0;
+    //     }
+    // },
+    // lists: {
+    //     type: Array,
+    //     default() {
+    //         return [{ title: 'lists' }]
+    //     }
+    // },
+    // },
     data() {
         return {
             // news: [
@@ -32,13 +78,39 @@ var hdNews = {
         delNews(k) {
             this.lists.splice(k, 1);
         },
+        sum() {
+            this.$emit('sum');
+        }
     },
 }
 
 var app = new Vue({
     el: "#hdcms",
+    directives: {
+        star: {
+            bind(el, bind) {
+                console.log(bind)
+                var color = bind.value ? bind.value : 'red';
+                el.style.cssText = 'color:' + color;
+            }
+        },
+        focus: {
+            inserted(el, bind) {
+                el.focus()
+            }
+        },
+        hide(el, bind) {
+            if (bind.value) {
+                el.style.cssText = "display:none"
+            }
+        }
+    },
     components: {
-        hdNews
+        hdNews,
+        bsInput,
+        hdList,
+        hdInput,
+        hdTextarea
     },
     watch: {
         'field.click': function (n, o) {
@@ -48,7 +120,17 @@ var app = new Vue({
             console.log(n.length)
         }
     },
+    // mounted() {
+    //     this.totalPrice()
+    // },
     computed: {
+        totalPrice() {
+            var sum = 0;
+            this.goods.forEach((v) => {
+                sum += v.num * v.price;
+            })
+            return sum;
+        },
         // status() {
         //     if (this.type == 'all') {
         //         return this.user;
@@ -63,6 +145,15 @@ var app = new Vue({
         // }
     },
     methods: {
+        beforeEnter(el) {
+            el.style.opacity = 0;
+        },
+        enter(el, done) {
+            Velocity(el, { opacity: 1 }, { duration: 5000, complete: done })
+        },
+        leave(el, done) {
+            Velocity(el, { opacity: 0 }, { duration: 5000, complete: done })
+        },
         handler() {
             console.log('php');
         },
@@ -123,6 +214,14 @@ var app = new Vue({
         }
     },
     data: {
+        color: 'red',
+        title: 'houdun',
+        type: true,
+        formType: "hdInput",
+        goods: [
+            { title: 'android', price: 100, num: 1 },
+            { title: 'iphone', price: 10, num: 1 }
+        ],
         news: [
             { title: 'cms' },
             { title: 'php' },
