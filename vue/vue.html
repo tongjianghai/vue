@@ -234,10 +234,13 @@
             template: '#lists',
             computed: {
                 totalPrice() {
-                    return this.$store.getters.totalPrice;
+                    // return this.$store.getters.totalPrice;
+                    return this.$store.getters['cart/totalPrice'];
                 },
                 goods() {
-                    return this.$store.getters.goods;
+                    // return this.$store.state.cart.goods;
+                    // return this.$store.getters.goods;
+                    return this.$store.getters['cart/goods'];
                 }
             },
             methods: {
@@ -251,15 +254,17 @@
             template: "#footerCart",
             computed: {
                 totalPrice() {
-                    return this.$store.getters.totalPrice;
+                    // return this.$store.getters.totalPrice;
+                    return this.$store.getters['cart/totalPrice'];
                 }
             },
         }
 
-        let store = new Vuex.Store({
+        const cartModule = {
+            namespaced: true,
             state: {
                 totalPrice: 100,
-                goods: []
+                goods: [{ id: 12 }]
                 // goods: [
                 //     { id: 1, title: 'xiaomi', price: 299, num: 200 },
                 //     { id: 2, title: 'huawei', price: 399, num: 100 },
@@ -303,6 +308,12 @@
                         console.log(response)
                     })
                 }
+            }
+        }
+
+        let store = new Vuex.Store({
+            modules: {
+                cart: cartModule
             }
         })
 

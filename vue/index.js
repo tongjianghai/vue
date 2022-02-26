@@ -123,7 +123,7 @@ var app = new Vue({
     },
     mounted() {
         // this.totalPrice()
-        this.$store.dispatch('loadGoods');
+        this.$store.dispatch('cart/loadGoods');
     },
     computed: {
         totalPrice() {
