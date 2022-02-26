@@ -21,9 +21,6 @@ Vue.directive('func', function (el, bind) {
     console.log(bind)
 })
 
-var lists = {
-
-}
 
 var bsInput = {
     template: "#bsInput",
@@ -86,6 +83,8 @@ var hdNews = {
 
 var app = new Vue({
     el: "#hdcms",
+    store,
+    // router: router,
     directives: {
         star: {
             bind(el, bind) {
@@ -106,6 +105,8 @@ var app = new Vue({
         }
     },
     components: {
+        footerCart,
+        lists,
         hdNews,
         bsInput,
         hdList,
@@ -120,9 +121,10 @@ var app = new Vue({
             console.log(n.length)
         }
     },
-    // mounted() {
-    //     this.totalPrice()
-    // },
+    mounted() {
+        // this.totalPrice()
+        this.$store.dispatch('loadGoods');
+    },
     computed: {
         totalPrice() {
             var sum = 0;

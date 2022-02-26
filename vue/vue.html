@@ -5,6 +5,8 @@
     <script src="../node_modules/axios/dist/axios.js"></script>
     <script src="../node_modules/lodash/lodash.js"></script>
     <script src="velocity.min.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="../node_modules/vuex/dist/vuex.js"></script>
 
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -99,7 +101,278 @@
         .error {
             color: red;
         }
+
+        .menu {
+            border: solid 2px #999;
+            padding: 10px;
+            display: block;
+        }
+
+        .news {
+            float: left;
+            border: solid 1px red;
+            padding: 20px;
+            width: 300px;
+        }
+
+        .slide {
+            float: left;
+            border: solid 1px red;
+            padding: 20px;
+            width: 300px;
+        }
     </style>
+    <script>
+        const menu = {
+            template: '#menu'
+        }
+
+        const NotFound = {
+            template: '<h1>Not Found</h1>'
+        }
+
+        const news = {
+            template: '#news',
+            data() {
+                return {
+                    news: [
+                        { title: 'www.baidu.com' },
+                        { title: 'www.houdunwang.com' },
+                    ]
+                }
+            }
+        }
+
+        const slide = {
+            template: '#slide',
+            data() {
+                return {
+                    slides: [
+                        { title: 'baidu' },
+                        { title: 'houdun' },
+                    ]
+                }
+            }
+        }
+
+        var data = [
+            { id: 1, title: 'php', content: 'php content' },
+            { id: 2, title: 'cms', content: 'cms content' },
+            { id: 3, title: 'about', content: 'about content' },
+        ]
+
+        const home = {
+            template: '#home',
+            data() {
+                return {
+                    news: data
+                }
+            },
+            methods: {
+                go(id) {
+                    var url = '/content/' + id;
+                    //{name:'content',params:{id:id}}
+                    // var url = {path:'/content/'+id}
+                    // this.$router.replace(url)
+                    // this.$router.go(-1)
+                    this.$router.push(url)
+                }
+            }
+        }
+
+        const hdphp = {
+            template: '<h1>hdphp</h1>'
+        }
+        const hdcms = {
+            template: '<h1>hdcms</h1>'
+        }
+
+        const content = {
+            template: "#content",
+            data() {
+                return {
+                    // id: 0
+                    field: {}
+                }
+            },
+            watch: {
+                '$route'(to, from) {
+                    this.load()
+                    // console.log(to)
+                    // console.log(from)
+                }
+            },
+            mounted() {
+                this.load()
+                // this.id = this.$route.params.id;
+                // if (!this.id) {
+                //     this.id = 1;
+                // }
+                // console.log(this.$route.params);
+                // this.totalPrice()
+            },
+            methods: {
+                back() {
+                    this.$router.go(-1)
+                },
+                load() {
+                    var id = this.$route.params.id;
+                    for (let index = 0; index < data.length; index++) {
+                        if (data[index].id == id) {
+                            this.field = data[index];
+                        }
+
+                    }
+                },
+                show() {
+                    console.log(this.$route.params)
+                }
+            },
+        }
+
+        let lists = {
+            template: '#lists',
+            computed: {
+                totalPrice() {
+                    return this.$store.getters.totalPrice;
+                },
+                goods() {
+                    return this.$store.getters.goods;
+                }
+            },
+            methods: {
+                del(id) {
+                    this.$store.commit('del', { id })
+                }
+            }
+        }
+
+        let footerCart = {
+            template: "#footerCart",
+            computed: {
+                totalPrice() {
+                    return this.$store.getters.totalPrice;
+                }
+            },
+        }
+
+        let store = new Vuex.Store({
+            state: {
+                totalPrice: 100,
+                goods: []
+                // goods: [
+                //     { id: 1, title: 'xiaomi', price: 299, num: 200 },
+                //     { id: 2, title: 'huawei', price: 399, num: 100 },
+                // ]
+            },
+            getters: {
+                totalPrice: state => {
+                    let totalPrice = 0;
+                    state.goods.forEach(v => {
+                        totalPrice += v.num * v.price;
+                    });
+                    return totalPrice;
+                },
+                goods(state) {
+                    let goods = state.goods;
+                    goods.forEach(v => {
+                        v.total = v.num * v.price;
+                    });
+                    return goods;
+                }
+            },
+            mutations: {
+                del(state, param) {
+                    // console.log(param)
+                    let k;
+                    for (let index = 0; index < state.goods.length; index++) {
+                        if (state.goods[index].id == param.id) {
+                            k = index; break;
+                        }
+                    }
+                    state.goods.splice(k, 1)
+                },
+                setGoods(state, param) {
+                    state.goods = param.goods
+                }
+            },
+            actions: {
+                loadGoods(store) {
+                    axios.get('http://127.0.0.1:9501').then(function (response) {
+                        store.commit('setGoods', { goods: response.data })
+                        console.log(response)
+                    })
+                }
+            }
+        })
+
+        let router = new VueRouter({
+            routes: [
+                // {
+                //     path: '/', components: {
+                //         default: menu,
+                //         news: news,
+                //         slide: slide
+                //     }
+                // },
+                // path: '/', component: home, children: [
+                //     { path: '/content/:id?', component: content, name: 'content' },
+                // ]
+                {
+                    path: '/', component: home
+                },
+                { path: '/about', redirect: { name: 'content', params: { id: 3 } } },
+                // { path: '/hdphp', component: hdphp },
+                // { path: '/hdcms', component: hdcms },
+                // { path: '/content/:id(\\d{2})', component: content },
+                { path: '/content/:id?', component: content, name: 'content' },
+                { path: '/content/3', alias: ['/alias'] },
+                { path: '*', component: NotFound },
+            ]
+        })
+    </script>
+    <script type="text/x-template" id="footerCart">
+        <div class="footerCart">
+            total: {{totalPrice}}
+        </div>
+    </script>
+    <script type="text/x-template" id="menu">
+        <div>
+            <a href="http://www.baidu.com">baidu</a>
+            <a href="http://www.houdunwang.com">houdun</a>
+        </div>
+    </script>
+    <script type="text/x-template" id="news">
+        <div>
+            <li v-for="v in news">{{v.title}}</li>
+        </div>
+    </script>
+    <script type="text/x-template" id="slide">
+        <div>
+            <li v-for="v in slides">{{v.title}}</li>
+        </div>
+    </script>
+    <script type="text/x-template" id="home">
+        <div>
+            <li v-for="v in news">
+                <a href="" @click.prevent="go(v.id)">{{v.title}}</a>
+                <!-- <router-link :to="{name:'content',params:{id:v.id}}">{{v.title}}</router-link> -->
+            </li>
+            <!-- <router-view></router-view> -->
+        </div>
+    </script>
+    <script type="text/x-template" id="content">
+        <div>
+            <h1>{{field.title}}</h1>
+            <p>
+                {{field.content}}
+            </p>
+            <a href="" @click.prevent="back">back home</a>
+            <!-- <router-link to="/">back home</router-link> -->
+            <!-- id:{{id}}
+            <button @click="show">show</button> -->
+        </div>
+    </script>
     <script type="text/x-template" id="bsInput">
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">{{title}}</label>
@@ -149,6 +422,22 @@
     </tr>
     </table> -->
     </script>
+    <script type="text/x-template" id="lists">
+        <div>
+            <table border="1" width="90%">
+                <tr><th>no</th><th>name</th><th>price</th><th>num</th><th>total</th></tr>
+                <tr v-for="v in goods">
+                    <td>{{v.id}}</td>
+                    <td>{{v.title}}</td>
+                    <td>{{v.price}}</td>
+                    <td>{{v.num}}</td>
+                    <td>{{v.total}}</td>
+                    <td><button @click="del(v.id)">delete</button></td>
+                </tr>
+            </table>
+            <h1>total: {{totalPrice}}</h1>
+        </div>
+    </script>
     <script type="text/x-template" id="hdList">
         <!-- <ul>
             <slot v-for="v in data" :field="v"></slot> -->
@@ -157,10 +446,24 @@
     <!-- </ul> -->
     </script>
     <div id="hdcms">
-        <span v-star="'green'">houdun.com</span>
+        <lists></lists>
+        <footer-cart></footer-cart>
+        <!-- <router-link to="/content">content</router-link>
+        <router-link to="/hdphp">hdphp</router-link>
+        <router-link to="/about">about</router-link> -->
+        <!-- <transition enter-active-class="animated zoomIn"> -->
+        <!-- <router-view></router-view> -->
+        <!-- </transition> -->
+        <!-- <router-link to="/content">content</router-link>
+        <router-link to="/hdphp">hdphp</router-link>
+        <router-link to="/hdcms">hdcms</router-link> -->
+        <!-- <router-view class="menu"></router-view> -->
+        <!-- <router-view class="news" name="news"></router-view> -->
+        <!-- <router-view class="slide" name="slide"></router-view> -->
+        <!-- <span v-star="'green'">houdun.com</span> -->
         <!-- <input v-model="color" type="text" v-hd.focus="'red'" /> -->
-        <input v-model="color" type="text" v-focus />
-        <h1 v-hide="false">php</h1>
+        <!-- <input v-model="color" type="text" v-focus /> -->
+        <!-- <h1 v-hide="false">php</h1> -->
         <!-- <button @click="type=!type">transit</button>
         <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
             <h1 v-if="type">houdunjs.com</h1>
